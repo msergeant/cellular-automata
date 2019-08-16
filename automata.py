@@ -1,5 +1,6 @@
 import pygame
 import math
+from game_of_life import World
 pygame.init()
 
 # Define some colors
@@ -18,7 +19,12 @@ done = False
 
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
-i = 0
+
+eater = [(5,5), (6,5), (7,5), (7,4), (6,3), (13,23), (13,22), (13,21), (12,23),
+         (11,23), (10,23), (9,22), (9, 20), (12,20), (26,25), (26,24), (27,24),
+         (28,25), (28,26), (28,27), (29,27)]
+exploder = [(21,23), (21,24), (21,25), (21,26), (21,27), (25,23), (25,24), (25,25), (25,26), (25,27), (23,23), (23, 27)]
+world = World(exploder)
 
 # -------- Main Program Loop -----------
 while not done:
@@ -27,18 +33,20 @@ while not done:
         if event.type == pygame.QUIT: # If user clicked close
             done = True # Flag that we are done so we exit this loop
 
-    # --- Game logic should go here
-
-    # --- Drawing code should go here
-
     # First, clear the screen to white. Don't put other drawing commands
     # above this, or they will be erased with this command.
     screen.fill(WHITE)
+
+    for x, y in world.live_cells():
+        # screen.set_at((x, y), BLACK)
+        pygame.draw.rect(screen, BLACK, [10 * x, 10 * y, 10, 10])
+
+    world = world.next_iteration()
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
     # --- Limit to 60 frames per second
-    clock.tick(60)
+    clock.tick(10)
 
 pygame.quit()
