@@ -10,8 +10,8 @@ GREEN    = (   0, 255,   0)
 RED      = ( 255,   0,   0)
 BLUE     = (   0,   0, 255)
 
-WIDTH = 100
-HEIGHT = 100
+WIDTH = 300
+HEIGHT = 300
 size = (WIDTH, HEIGHT)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Reactive Diffusion")
@@ -22,7 +22,7 @@ done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
-square = [(x,y) for x in range(50, 60) for y in range(50, 60)]
+square = [(x,y) for x in range(145, 165) for y in range(145, 165)]
 world = World(square, WIDTH, HEIGHT)
 
 # -------- Main Program Loop -----------

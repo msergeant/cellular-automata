@@ -22,7 +22,7 @@ class World(object):
 
         colorA = max(0, 255 - int(cell[0] * 255))
         colorB = max(0, 255 - int(cell[1] * 255))
-        return (colorA, colorB, colorB)
+        return (colorA, 0, colorB)
 
     def update(self):
         lowerX = max(1, self.minX)
