@@ -22,7 +22,7 @@ class World(object):
 
         colorA = max(0, 255 - int(cell[0] * 255))
         colorB = max(0, 255 - int(cell[1] * 255))
-        return (colorA, 0, colorB)
+        return (colorA, colorB, colorB)
 
     def update(self):
         lowerX = max(1, self.minX)
@@ -50,7 +50,6 @@ class World(object):
                 # Find a boundary for next update
                 if (nextA < 0.99999 and
                     nextB > 0.00001):
-                    print((nextA,nextB))
                     self.minX = min(x - 2, self.minX)
                     self.minY = min(y - 2, self.minY)
                     self.maxX = max(x + 2, self.maxX)
