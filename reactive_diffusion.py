@@ -20,8 +20,9 @@ class World(object):
     def get_color(self, x, y):
         cell =  self.grid[x + self.width * y]
 
-        color = max(0, 255 - int(cell[1] * 255))
-        return (color, color, color)
+        colorA = max(0, 255 - int(cell[0] * 255))
+        colorB = max(0, 255 - int(cell[1] * 255))
+        return (colorA, 0, colorB)
 
     def update(self):
         lowerX = max(1, self.minX)
