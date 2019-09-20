@@ -9,6 +9,10 @@ class World(object):
         self.height = height
         self.grid = [(1, 0) for i in range(width * height)]
         self.next = [(1, 0) for i in range(width * height)]
+        self.minX = 1
+        self.minY = 1
+        self.maxX = self.width - 1
+        self.maxY = self.height - 1
 
         for cell in cells:
             self.grid[cell[0] + width * cell[1]] = (0, 1)
@@ -20,8 +24,17 @@ class World(object):
         return (color, color, color)
 
     def update(self):
-        for x in range(1, self.width - 1):
-            for y in range(1, self.height - 1):
+        lowerX = min(1, self.minX)
+        upperX = max(self.width - 1, self.maxX)
+        lowerY = min(1, self.minY)
+        upperY = max(self.height - 1, self.maxX)
+        self.minX = self.width
+        self.minY = self.height
+        self.maxX = 1
+        self.maxY = 1
+
+        for x in range(lowerX, upperX):
+            for y in range(lowerY, upperY):
                 a = self.grid[x + self.width * y][0]
                 b = self.grid[x + self.width * y][1]
                 nextA = (a +
@@ -32,6 +45,14 @@ class World(object):
                          self.DB * self._laplaceB(x, y) +
                          a * b * b -
                          (self.K + self.FEED) * b)
+
+                # Find a boundary for next update
+                if nextA < 1 or nextB > 0:
+                    self.minX = min(x, self.minX)
+                    self.minY = min(y, self.minY)
+                    self.maxX = max(x, self.maxX)
+                    self.maxY = max(y, self.maxY)
+
                 self.next[x + self.width * y] = (min(nextA, 1), min(nextB, 1))
 
         self.grid = self.next
