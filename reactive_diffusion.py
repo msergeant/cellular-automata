@@ -24,10 +24,10 @@ class World(object):
         return (color, color, color)
 
     def update(self):
-        lowerX = min(1, self.minX)
-        upperX = max(self.width - 1, self.maxX)
-        lowerY = min(1, self.minY)
-        upperY = max(self.height - 1, self.maxX)
+        lowerX = max(1, self.minX)
+        upperX = min(self.width - 1, self.maxX)
+        lowerY = max(1, self.minY)
+        upperY = min(self.height - 1, self.maxY)
         self.minX = self.width
         self.minY = self.height
         self.maxX = 1
@@ -47,11 +47,13 @@ class World(object):
                          (self.K + self.FEED) * b)
 
                 # Find a boundary for next update
-                if nextA < 1 or nextB > 0:
-                    self.minX = min(x, self.minX)
-                    self.minY = min(y, self.minY)
-                    self.maxX = max(x, self.maxX)
-                    self.maxY = max(y, self.maxY)
+                if (nextA < 0.99999 and
+                    nextB > 0.00001):
+                    print((nextA,nextB))
+                    self.minX = min(x - 2, self.minX)
+                    self.minY = min(y - 2, self.minY)
+                    self.maxX = max(x + 2, self.maxX)
+                    self.maxY = max(y + 2, self.maxY)
 
                 self.next[x + self.width * y] = (min(nextA, 1), min(nextB, 1))
 
